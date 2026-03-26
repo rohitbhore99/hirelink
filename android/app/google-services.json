@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "382503438045",
+    "project_id": "hirelink1",
+    "storage_bucket": "hirelink1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382503438045:android:c0ed419f9cab915f49fd34",
+        "android_client_info": {
+          "package_name": "com.example.hirelink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382503438045-jrpp0bd5513enmd0vos9au9que6u83kf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWscyUoTuTY0zIs3RLgBR3oQ68iDgJY5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382503438045-jrpp0bd5513enmd0vos9au9que6u83kf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

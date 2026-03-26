@@ -1,0 +1,37 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "applications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "appliedAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "applications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "jobId", "order": "ASCENDING" },
+        { "fieldPath": "appliedAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "chats",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "users", "arrayConfig": "CONTAINS" },
+        { "fieldPath": "lastMessageAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
