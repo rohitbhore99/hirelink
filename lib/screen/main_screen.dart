@@ -1,16 +1,12 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:firebase_auth/firebase_auth.dart";
-import "package:shared_preferences/shared_preferences.dart";
-import "package:hirelink1/core/di/providers.dart";
-import "package:hirelink1/features/notifications/domain/models/notification_model.dart";
 import "package:hirelink1/core/widgets/app_page_route.dart";
 import "home_screen.dart";
 import "applications_screen.dart";
 import "recruiter_applications_screen.dart";
 import "post_job_screen.dart";
-import "chat_list_screen.dart";
 import "profile_screen.dart";
+import "discover_screen.dart";
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
@@ -34,9 +30,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   Widget build(BuildContext context) {
     final screens = const [
       HomeScreen(),
-      ApplicationsScreen(), // Formerly Jobs index (1) mapped to ApplicationsScreen? Wait, if 1 is Jobs... ApplicationsScreen has Jobs code!
-      RecruiterApplicationsScreen(), // 2: Applications 
-      ProfileScreen(), // 3: Profile
+      DiscoverScreen(),
+      ApplicationsScreen(),
+      RecruiterApplicationsScreen(),
+      ProfileScreen(),
     ];
 
     final theme = Theme.of(context);
@@ -99,6 +96,10 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               NavigationDestination(
                 icon: Icon(Icons.add_box_outlined),
                 label: "Post",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.swipe_rounded),
+                label: "Discover",
               ),
               NavigationDestination(
                 icon: Icon(Icons.work_outline_rounded),

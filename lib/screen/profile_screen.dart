@@ -4,7 +4,6 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:hirelink1/core/di/providers.dart";
 import "package:hirelink1/features/user/domain/models/user_model.dart";
 import "package:hirelink1/theme/app_theme.dart";
-import "package:hirelink1/core/theme/theme_provider.dart";
 import "package:url_launcher/url_launcher.dart";
 import "edit_profile_screen.dart";
 import "login_screen.dart";

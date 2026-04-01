@@ -5,6 +5,7 @@ class NotificationModel {
   final String userId;
   final String title;
   final String body;
+  final String? jobId;
   final DateTime? timestamp;
 
   const NotificationModel({
@@ -12,6 +13,7 @@ class NotificationModel {
     required this.userId,
     required this.title,
     required this.body,
+    this.jobId,
     this.timestamp,
   });
 
@@ -22,6 +24,7 @@ class NotificationModel {
       userId: map['userId']?.toString() ?? '',
       title: map['title']?.toString() ?? '',
       body: map['body']?.toString() ?? '',
+      jobId: map['jobId']?.toString(),
       timestamp: (map['timestamp'] as Timestamp?)?.toDate(),
     );
   }

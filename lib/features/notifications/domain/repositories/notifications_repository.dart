@@ -6,6 +6,7 @@ abstract class NotificationsRepository {
     required String userId,
     required String title,
     required String body,
+    String? jobId,
   });
   Future<void> deleteNotification(String notificationId);
   Future<void> clearAllNotifications(String userId);

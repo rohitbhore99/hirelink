@@ -27,11 +27,13 @@ class FirebaseNotificationsRepository implements NotificationsRepository {
     required String userId,
     required String title,
     required String body,
+    String? jobId,
   }) async {
     await _db.collection('notifications').add({
       'userId': userId,
       'title': title,
       'body': body,
+      'jobId': ?jobId,
       'timestamp': Timestamp.now(),
     });
   }

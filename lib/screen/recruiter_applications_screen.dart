@@ -127,7 +127,6 @@ class _JobWithAppsCard extends StatelessWidget {
   final List<String>? filterStatus;
 
   const _JobWithAppsCard({
-    super.key,
     required this.job,
     required this.theme,
     this.filterStatus,
@@ -155,7 +154,7 @@ class _JobWithAppsCard extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) =>
-                      JobApplicantsScreen(jobId: job.id, jobTitle: job.title),
+                      JobApplicantsScreen(jobId: job.id, jobTitle: job.title, blindHiring: job.blindHiring),
                 ),
               ),
               child: Container(

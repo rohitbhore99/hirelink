@@ -57,6 +57,7 @@ class FirebaseJobsRepository implements JobsRepository {
     int openings = 1,
     bool urgentHiring = false,
     bool fresherFriendly = false,
+    bool blindHiring = false,
     bool isDraft = false,
   }) async {
     await _db.collection('jobs').add({
@@ -83,6 +84,7 @@ class FirebaseJobsRepository implements JobsRepository {
       'openings': openings,
       'urgentHiring': urgentHiring,
       'fresherFriendly': fresherFriendly,
+      'blindHiring': blindHiring,
       'isDraft': isDraft,
       'postedBy': postedBy,
       'createdAt': Timestamp.now(),

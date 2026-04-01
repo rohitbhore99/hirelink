@@ -86,8 +86,9 @@ class _ApplicationsScreenState extends ConsumerState<ApplicationsScreen> {
                           icon: Icons.error_outline_rounded,
                         );
                       }
-                      if (!snapshot.hasData)
+                      if (!snapshot.hasData) {
                         return const Center(child: CircularProgressIndicator());
+                      }
                       final applications = [...snapshot.data!.docs]
                         ..sort((a, b) {
                           final at =
@@ -126,8 +127,9 @@ class _ApplicationsScreenState extends ConsumerState<ApplicationsScreen> {
                                 return const SizedBox.shrink();
                               }
                               final job = jobSnapshot.data;
-                              if (job == null)
+                              if (job == null) {
                                 return _missingCard(theme, status);
+                              }
                               return _jobCard(
                                 theme,
                                 title: job.title,
@@ -150,8 +152,9 @@ class _ApplicationsScreenState extends ConsumerState<ApplicationsScreen> {
                           icon: Icons.error_outline_rounded,
                         );
                       }
-                      if (!snapshot.hasData)
+                      if (!snapshot.hasData) {
                         return const Center(child: CircularProgressIndicator());
+                      }
                       final posted = [...snapshot.data!]
                         ..sort(
                           (a, b) => (b.createdAt ?? DateTime(0)).compareTo(

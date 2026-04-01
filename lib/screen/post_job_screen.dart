@@ -34,6 +34,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
   bool _notDisclosed = false;
   bool _urgentHiring = false;
   bool _fresherFriendly = false;
+  bool _blindHiring = false;
   bool _isDraft = false;
 
   DateTime? _applicationDeadline;
@@ -83,7 +84,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
         'Responsibilities:\n- Own feature development and delivery\n- Collaborate with cross-functional teams\n- Write clean, maintainable code\n\nDaily Activities:\n- Participate in standups\n- Review pull requests\n- Deliver focused work in 1-2 week cycles';
     setState(() {
       _descriptionController.text =
-          'Join our team as a ${_titleController.text.trim().isEmpty ? 'developer' : _titleController.text}.\n\n${generated}';
+          'Join our team as a ${_titleController.text.trim().isEmpty ? 'developer' : _titleController.text}.\n\n$generated';
       _responsibilitiesController.text =
           '• Collaborate with team members\n• Design and implement features\n• Ensure code quality and testing\n• Participate in demos';
       _dailyActivitiesController.text =
@@ -129,6 +130,7 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
 
             urgentHiring: _urgentHiring,
             fresherFriendly: _fresherFriendly,
+            blindHiring: _blindHiring,
 
             isDraft: _isDraft,
           );
@@ -347,6 +349,12 @@ class _PostJobScreenState extends ConsumerState<PostJobScreen> {
                 title: const Text('Fresher Friendly'),
                 value: _fresherFriendly,
                 onChanged: (v) => setState(() => _fresherFriendly = v),
+              ),
+              SwitchListTile(
+                title: const Text('Blind Hiring Mode 🙈'),
+                subtitle: const Text('Hide applicant personal details initially'),
+                value: _blindHiring,
+                onChanged: (v) => setState(() => _blindHiring = v),
               ),
 
               const SizedBox(height: 16),

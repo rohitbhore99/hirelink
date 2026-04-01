@@ -25,6 +25,7 @@ abstract class JobsRepository {
     int openings,
     bool urgentHiring,
     bool fresherFriendly,
+    bool blindHiring,
     bool isDraft,
   });
 }

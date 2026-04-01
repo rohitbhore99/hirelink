@@ -68,3 +68,28 @@ final userProfileStreamProvider = StreamProvider.family<UserModel?, String>((
 ) {
   return ref.watch(userRepositoryProvider).watchUser(uid);
 });
+
+final responsivenessScoreProvider = FutureProvider.family<int, String>((ref, recruiterId) async {
+  final db = ref.read(firestoreProvider);
+  final now = DateTime.now();
+  final fourteenDaysAgo = now.subtract(const Duration(days: 14));
+  
+  final query = await db
+      .collection('applications')
+      .where('recruiterId', isEqualTo: recruiterId)
+      .where('status', isEqualTo: 'applied')
+      .get();
+      
+  int penalty = 0;
+  for (var doc in query.docs) {
+    if (doc.data().containsKey('appliedAt')) {
+      final appliedAt = (doc.data()['appliedAt'] as Timestamp).toDate();
+      if (appliedAt.isBefore(fourteenDaysAgo)) {
+        penalty += 10;
+      }
+    }
+  }
+  
+  int score = 100 - penalty;
+  return score < 0 ? 0 : score;
+});

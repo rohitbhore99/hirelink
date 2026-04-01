@@ -10,7 +10,8 @@ import 'package:hirelink1/widgets/empty_state.dart';
 import 'package:hirelink1/screen/recruiter_applications_screen.dart' as hirelink_recruiter;
 import 'package:hirelink1/screen/applications_screen.dart' as hirelink_apps;
 import 'package:hirelink1/screen/chat_list_screen.dart' as hirelink_chat_list;
-import 'package:hirelink1/features/user/domain/models/user_model.dart';
+import 'package:hirelink1/screen/job_details_screen.dart' as hirelink_job_details;
+import 'package:hirelink1/screen/user_public_profile_screen.dart' as hirelink_public_profile;
 
 class NotificationScreen extends ConsumerWidget {
   const NotificationScreen({super.key});
@@ -122,21 +123,33 @@ class NotificationScreen extends ConsumerWidget {
                 },
                 child: AnimatedPressable(
                   borderRadius: BorderRadius.circular(16),
-                  onTap: () {
+                  onTap: () async {
                     final title = n.title.toLowerCase();
-                    if (title.contains('application') || title.contains('accepted') || title.contains('successful')) {
+                    if (n.jobId != null && (title.contains('application') || title.contains('accepted') || title.contains('successful') || title.contains('update') || title.contains('applicant'))) {
+                      if (context.mounted) Navigator.pop(context);
+                      final job = await ref.read(jobsRepositoryProvider).getJob(n.jobId!);
+                      if (job != null && context.mounted) {
+                        if (title.contains('accepted') || title.contains('update') || title.contains('successful')) {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => hirelink_public_profile.UserPublicProfileScreen(userId: job.postedBy)));
+                        } else {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => hirelink_job_details.JobDetailsScreen(job: job)));
+                        }
+                      } else if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Job no longer available')));
+                      }
+                    } else if (title.contains('application') || title.contains('accepted') || title.contains('successful')) {
                       final role = ref.read(userProfileStreamProvider(userId)).valueOrNull?.role ?? 'jobseeker';
-                      Navigator.pop(context); // pop the notification screen
+                      if (context.mounted) Navigator.pop(context);
                       if (role == 'recruiter') {
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const hirelink_recruiter.RecruiterApplicationsScreen()));
                       } else {
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const hirelink_apps.ApplicationsScreen()));
                       }
                     } else if (title.contains('message')) {
-                      Navigator.pop(context);
+                      if (context.mounted) Navigator.pop(context);
                       Navigator.push(context, MaterialPageRoute(builder: (_) => const hirelink_chat_list.ChatListScreen()));
                     } else {
-                      Navigator.pop(context);
+                      if (context.mounted) Navigator.pop(context);
                     }
                   },
                   child: Container(

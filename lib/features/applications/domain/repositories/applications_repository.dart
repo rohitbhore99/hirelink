@@ -6,6 +6,7 @@ abstract class ApplicationsRepository {
     required String jobId,
     required String recruiterId,
     String? resumeUrl,
+    String? coverLetter,
   });
 
   Future<bool> hasApplied({required String userId, required String jobId});

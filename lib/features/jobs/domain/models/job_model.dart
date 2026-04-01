@@ -22,6 +22,7 @@ class JobModel {
 
   final bool urgentHiring;
   final bool fresherFriendly;
+  final bool blindHiring;
   final String postedBy;
 
   final bool isDraft;
@@ -48,6 +49,7 @@ class JobModel {
     this.openings = 1,
     this.urgentHiring = false,
     this.fresherFriendly = false,
+    this.blindHiring = false,
     required this.postedBy,
     this.isDraft = false,
     this.createdAt,
@@ -86,6 +88,7 @@ class JobModel {
           : int.tryParse(map['openings']?.toString() ?? '') ?? 1),
       urgentHiring: map['urgentHiring'] == true,
       fresherFriendly: map['fresherFriendly'] == true,
+      blindHiring: map['blindHiring'] == true,
       postedBy: map['postedBy']?.toString() ?? '',
       isDraft: map['isDraft'] == true,
       createdAt: parseTs(map['createdAt'])?.toDate(),
@@ -117,6 +120,7 @@ class JobModel {
       'openings': openings,
       'urgentHiring': urgentHiring,
       'fresherFriendly': fresherFriendly,
+      'blindHiring': blindHiring,
       'postedBy': postedBy,
       'isDraft': isDraft,
       'createdAt': createdAt == null ? null : Timestamp.fromDate(createdAt!),

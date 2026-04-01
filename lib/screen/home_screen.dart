@@ -11,13 +11,14 @@ import 'package:hirelink1/widgets/empty_state.dart';
 import 'package:hirelink1/widgets/job_card.dart';
 import 'package:hirelink1/widgets/custom_app_bar.dart';
 import 'package:hirelink1/screen/chat_list_screen.dart';
-import 'package:hirelink1/screen/profile_screen.dart';
 import 'package:hirelink1/screen/notification_screen.dart';
+import 'package:hirelink1/screen/analytics_screen.dart';
 import 'package:hirelink1/theme/app_theme.dart';
 import 'package:hirelink1/core/theme/app_spacing.dart';
 import 'package:hirelink1/core/widgets/app_page_route.dart';
 import 'package:hirelink1/features/notifications/domain/models/notification_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -200,11 +201,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
           appBar: CustomAppBar(
-            title: 'HireLink',
-            titleWidget: Image.asset(
-              'assets/images/logo.png',
-              height: 32,
-              errorBuilder: (_, __, ___) => const Text('HireLink'),
+            title: 'Hire/ink',
+            leading: IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  AppPageRoute(child: const AnalyticsScreen()),
+                );
+              },
+              icon: const Icon(Icons.analytics_rounded),
+            ),
+            titleWidget: Text(
+              'Hire/ink',
+              style: GoogleFonts.righteous(
+                fontSize: 28,
+                fontWeight: FontWeight.w600,
+                color: theme.colorScheme.primary,
+                letterSpacing: 1.2,
+              ),
             ),
             searchController: _searchController,
             onSearchChanged: (v) => setState(() => _searchQuery = v),

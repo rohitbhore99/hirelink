@@ -32,8 +32,9 @@ double _profileCompleteness(UserModel? user) {
 
 class UserPublicProfileScreen extends ConsumerWidget {
   final String userId;
+  final bool blindMode;
 
-  const UserPublicProfileScreen({super.key, required this.userId});
+  const UserPublicProfileScreen({super.key, required this.userId, this.blindMode = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,24 +60,25 @@ class UserPublicProfileScreen extends ConsumerWidget {
                   ),
                 );
               }
-              return _PublicProfileBody(user: user, theme: theme);
+              return _PublicProfileBody(user: user, theme: theme, blindMode: blindMode);
             },
           ),
     );
   }
 }
 
-class _PublicProfileBody extends StatelessWidget {
+class _PublicProfileBody extends ConsumerWidget {
   final UserModel user;
   final ThemeData theme;
+  final bool blindMode;
 
-  const _PublicProfileBody({required this.user, required this.theme});
+  const _PublicProfileBody({required this.user, required this.theme, this.blindMode = false});
 
   @override
-  Widget build(BuildContext context) {
-    final name = user.name.isEmpty ? 'Unknown User' : user.name;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final name = blindMode ? 'Candidate (Blind Hiring Mode)' : (user.name.isEmpty ? 'Unknown User' : user.name);
     final bio = user.bio.isEmpty ? 'No bio added' : user.bio;
-    final imageUrl = user.profileImageUrl;
+    final imageUrl = blindMode ? '' : user.profileImageUrl;
     final resumeUrl = user.resumeUrl;
     final completeness = _profileCompleteness(user);
     final completionPercent = (completeness * 100).round();
@@ -173,17 +175,26 @@ class _PublicProfileBody extends StatelessWidget {
           _ProfileSectionCard(
             title: 'Basic Info',
             children: [
-              _kv('Full Name', user.name, 'Not added'),
+              _kv('Full Name', name, 'Not added'),
               _kv(
                 'Profile Picture',
-                imageUrl.isNotEmpty ? 'Uploaded' : '',
+                imageUrl.isNotEmpty ? 'Uploaded' : (blindMode ? 'Hidden in blind mode' : ''),
                 'Not uploaded',
               ),
               _kv('Headline', user.headline, 'Not added'),
               _kv('Bio / About Me', user.bio, 'Not added'),
-              _kv('Location', user.location, 'Not added'),
-              _kv('Email', user.email, 'Not added'),
-              _kv('Phone Number', user.phone, 'Not added'),
+              _kv('Location', blindMode ? 'Hidden' : user.location, 'Not added'),
+              _kv('Email', blindMode ? 'Hidden' : user.email, 'Not added'),
+              _kv('Phone Number', blindMode ? 'Hidden' : user.phone, 'Not added'),
+              if (user.role == 'recruiter' || user.role == 'employer')
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: ref.watch(responsivenessScoreProvider(user.uid)).when(
+                    data: (score) => _kv('Responsiveness Score 👻', '$score%', 'N/A'),
+                    loading: () => const SizedBox.shrink(),
+                    error: (_, __) => const SizedBox.shrink(),
+                  ),
+                ),
             ],
           ),
           const SizedBox(height: 14),
@@ -212,20 +223,20 @@ class _PublicProfileBody extends StatelessWidget {
               ),
               _LinkRow(
                 label: 'GitHub',
-                url: user.portfolioGithub ?? '',
-                emptyText: 'Not added',
+                url: blindMode ? '' : (user.portfolioGithub ?? ''),
+                emptyText: blindMode ? 'Hidden in blind mode' : 'Not added',
               ),
               _LinkRow(
                 label: 'LinkedIn',
-                url: user.portfolioLinkedin ?? '',
-                emptyText: 'Not added',
+                url: blindMode ? '' : (user.portfolioLinkedin ?? ''),
+                emptyText: blindMode ? 'Hidden in blind mode' : 'Not added',
               ),
               _LinkRow(
                 label: 'Personal Website',
-                url: user.portfolioWebsite ?? '',
-                emptyText: 'Not added',
+                url: blindMode ? '' : (user.portfolioWebsite ?? ''),
+                emptyText: blindMode ? 'Hidden in blind mode' : 'Not added',
               ),
-              if (resumeUrl.isNotEmpty)
+              if (resumeUrl.isNotEmpty && !blindMode)
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: OutlinedButton.icon(

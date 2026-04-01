@@ -40,6 +40,18 @@ class _JobCardState extends ConsumerState<JobCard> {
     final scale = _pressed ? 0.985 : 1.0;
     final heroTag = 'job-card-${widget.job.id}';
 
+    int? matchPercentage;
+    final userProfileAsync = ref.watch(userProfileStreamProvider(currentUserId));
+    final userProfile = userProfileAsync.valueOrNull;
+    if (userProfile != null) {
+      final jobSkills = widget.job.skills.split(',').map((e) => e.trim().toLowerCase()).where((e) => e.isNotEmpty).toList();
+      if (jobSkills.isNotEmpty) {
+        final userSkills = userProfile.skills.split(',').map((e) => e.trim().toLowerCase()).where((e) => e.isNotEmpty).toSet();
+        final missingSkills = jobSkills.where((js) => !userSkills.contains(js)).toList();
+        matchPercentage = ((jobSkills.length - missingSkills.length) / jobSkills.length * 100).round();
+      }
+    }
+
     return AnimatedScale(
       scale: scale,
       duration: const Duration(milliseconds: 150),
@@ -116,6 +128,31 @@ class _JobCardState extends ConsumerState<JobCard> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
+                            if (matchPercentage != null && matchPercentage > 0)
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 6),
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF10B981).withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(4),
+                                  border: Border.all(color: const Color(0xFF10B981).withOpacity(0.3)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0xFF10B981).withOpacity(0.2),
+                                      blurRadius: 4,
+                                      spreadRadius: 1,
+                                    ),
+                                  ],
+                                ),
+                                child: Text(
+                                  '$matchPercentage% Match',
+                                  style: theme.textTheme.labelMedium?.copyWith(
+                                    color: const Color(0xFF10B981), // glowing green
+                                    fontWeight: FontWeight.w800,
+                                    letterSpacing: 0.5,
+                                  ),
+                                ),
+                              ),
                             GestureDetector(
                               onTap: () => Navigator.push(
                                 context,
@@ -250,6 +287,7 @@ class _JobCardState extends ConsumerState<JobCard> {
                                   userId: widget.job.postedBy,
                                   title: 'New Job Application',
                                   body: 'Someone applied to your job',
+                                  jobId: widget.job.id,
                                 );
                             if (context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(

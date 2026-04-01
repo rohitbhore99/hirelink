@@ -157,21 +157,21 @@ class RecruiterDashboard extends ConsumerWidget {
                               icon: Icon(Icons.hourglass_empty_rounded, color: theme.colorScheme.tertiary),
                               onPressed: status == 'applied' ? () async {
                                 await applicationsRepo.updateApplicationStatus(app.id, 'under_review');
-                                await notificationsRepo.sendNotification(userId: applicantId, title: 'Application Update', body: 'Your application for ${job.title} is under review');
+                                await notificationsRepo.sendNotification(userId: applicantId, title: 'Application Update', body: 'Your application for ${job.title} is under review', jobId: job.id);
                               } : null,
                             ),
                             IconButton(
                               icon: Icon(Icons.check_circle_rounded, color: theme.colorScheme.primary),
                               onPressed: () async {
                                 await applicationsRepo.updateApplicationStatus(app.id, 'accepted');
-                                await notificationsRepo.sendNotification(userId: applicantId, title: 'Application Accepted', body: 'Congratulations! You have been accepted for ${job.title}');
+                                await notificationsRepo.sendNotification(userId: applicantId, title: 'Application Accepted', body: 'Congratulations! You have been accepted for ${job.title}', jobId: job.id);
                               },
                             ),
                             IconButton(
                               icon: Icon(Icons.cancel_rounded, color: theme.colorScheme.error),
                               onPressed: () async {
                                 await applicationsRepo.updateApplicationStatus(app.id, 'rejected');
-                                await notificationsRepo.sendNotification(userId: applicantId, title: 'Application Update', body: 'Your application for ${job.title} was not successful');
+                                await notificationsRepo.sendNotification(userId: applicantId, title: 'Application Update', body: 'Your application for ${job.title} was not successful', jobId: job.id);
                               },
                             ),
                           ],

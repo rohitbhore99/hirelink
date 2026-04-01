@@ -4,9 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hirelink1/screen/login_screen.dart';
+import 'package:hirelink1/screen/splash_screen.dart';
 import 'package:hirelink1/screen/main_screen.dart';
 import 'package:hirelink1/services/notification_service.dart';
-import 'package:hirelink1/core/theme/app_theme.dart';
+import 'package:hirelink1/core/theme/app_theme.dart';     
 import 'package:hirelink1/core/theme/theme_provider.dart';
 
 @pragma('vm:entry-point')
@@ -18,7 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await NotificationService().init();
-
+ 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const ProviderScope(child: MyApp()));
@@ -38,7 +39,7 @@ class MyApp extends ConsumerWidget {
       themeMode: themeController.themeMode,
       themeAnimationDuration: const Duration(milliseconds: 260),
       themeAnimationCurve: Curves.easeOutCubic,
-      home: const AuthWrapper(),
+      home: const SplashScreen(),
     );
   }
 }

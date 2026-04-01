@@ -5,6 +5,7 @@ import 'package:hirelink1/core/theme/app_spacing.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Widget? titleWidget;
+  final Widget? leading;
   final TextEditingController? searchController;
   final ValueChanged<String>? onSearchChanged;
   final VoidCallback? onNotificationTap;
@@ -15,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     this.titleWidget,
+    this.leading,
     this.searchController,
     this.onSearchChanged,
     this.onNotificationTap,
@@ -32,6 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       toolbarHeight: 60,
       titleSpacing: AppSpacing.md,
+      leading: leading,
       title: titleWidget ?? Text(title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
       actions: [
         if (onNotificationTap != null)

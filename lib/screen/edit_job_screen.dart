@@ -267,7 +267,7 @@ class _EditJobScreenState extends ConsumerState<EditJobScreen> {
                 ),
               ),
               DropdownButtonFormField<String>(
-                value: _type,
+                initialValue: _type,
                 decoration: const InputDecoration(labelText: 'Job Type'),
                 items: const [
                   DropdownMenuItem(
@@ -291,7 +291,7 @@ class _EditJobScreenState extends ConsumerState<EditJobScreen> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
-                value: _workMode,
+                initialValue: _workMode,
                 decoration: const InputDecoration(labelText: 'Work Mode'),
                 items: ['Remote', 'On-site', 'Hybrid']
                     .map((e) => DropdownMenuItem(value: e, child: Text(e)))
@@ -350,7 +350,7 @@ class _EditJobScreenState extends ConsumerState<EditJobScreen> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
-                value: _experienceLevel,
+                initialValue: _experienceLevel,
                 decoration: const InputDecoration(
                   labelText: 'Experience Level',
                 ),

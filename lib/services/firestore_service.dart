@@ -160,6 +160,7 @@ class FirestoreService {
         recruiterId,
         "New Application",
         "Someone applied to your job",
+        jobId,
       );
     }
   }
@@ -200,12 +201,14 @@ class FirestoreService {
   Future<void> sendNotification(
     String userId,
     String title,
-    String body,
-  ) async {
+    String body, [
+    String? jobId,
+  ]) async {
     await _db.collection("notifications").add({
       "userId": userId,
       "title": title,
       "body": body,
+      "jobId": ?jobId,
       "timestamp": Timestamp.now(),
     });
   }

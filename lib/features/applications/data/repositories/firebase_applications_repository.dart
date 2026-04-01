@@ -14,6 +14,7 @@ class FirebaseApplicationsRepository implements ApplicationsRepository {
     required String jobId,
     required String recruiterId,
     String? resumeUrl,
+    String? coverLetter,
   }) async {
     await _db.collection('applications').add({
       'userId': userId,
@@ -24,6 +25,7 @@ class FirebaseApplicationsRepository implements ApplicationsRepository {
       'appliedAt': Timestamp.now(),
       'timestamp': Timestamp.now(),
       if (resumeUrl != null && resumeUrl.isNotEmpty) 'resumeUrl': resumeUrl,
+      if (coverLetter != null && coverLetter.isNotEmpty) 'coverLetter': coverLetter,
     });
   }
 

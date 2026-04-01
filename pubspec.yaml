@@ -64,6 +64,8 @@ dependencies:
   url_launcher: ^6.2.5
 
   google_fonts: ^6.1.0
+  email_otp: ^3.1.0
+  flutter_dotenv: ^6.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -74,16 +76,13 @@ dev_dependencies:
 flutter_icons: 
   android: true
   ios: true
-  image_path: "assets/images/logo.png"
+  image_path: "assets/images/logo.jpeg"
 
 flutter_native_splash:
   color: "#ffffff"
-  image: "assets/images/logo.png"
+  image: "assets/images/logo.jpeg"
   color_dark: "#0F172A"
-  android_12:
-    image: "assets/images/logo.png"
-    icon_background_color: "#ffffff"
-    icon_background_color_dark: "#0F172A"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
